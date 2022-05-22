@@ -11,7 +11,15 @@
     <router-link to="/home">home</router-link>
   </div>
   <div style="margin-top: 10px">
-    <router-view > </router-view>
+    <router-view v-slot="{ Component }">
+      <Suspense>
+        <!-- 主要内容 -->
+        <component :is="Component"></component>
+
+        <!-- 加载中状态 -->
+        <template #fallback> 正在加载... </template>
+      </Suspense>
+    </router-view>
   </div>
 </template>
 

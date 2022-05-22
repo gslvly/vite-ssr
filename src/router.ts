@@ -1,20 +1,20 @@
-import { createRouter, createMemoryHistory,createWebHistory } from "vue-router";
+import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 const router = createRouter({
-  history: createWebHistory(),
+  history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
   routes: [
     {
-      path: "/:path(.*$)",
-      redirect: "/home",
+      path: '/:path(.*$)',
+      redirect: '/home',
     },
     {
-      path: "/home",
-      component: () => import("./views/home.vue"),
+      path: '/home',
+      component: () => import('./views/home.vue'),
     },
     {
-      path: "/about",
-      component: () => import("./views/about.vue"),
+      path: '/about',
+      component: () => import('./views/about.vue'),
     },
   ],
-});
+})
 
-export { router };
+export { router }

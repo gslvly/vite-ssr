@@ -1,0 +1,7 @@
+public
+src/assets/images/*
+src/assets/iconfont/*
+*.png
+*.svg
+*.scss
+*.css
