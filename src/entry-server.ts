@@ -1,6 +1,7 @@
 import { createApp } from './main'
 import { renderToString, SSRContext } from 'vue/server-renderer'
 import { basename } from 'path'
+import { ssrFetch } from './ssr-fetch'
 type Manifest = {
   [p: string]: string[]
 }
@@ -8,15 +9,11 @@ const render = async (url: string, manifest: Manifest) => {
   const { app, router } = createApp()
   router.push(url)
   await router.isReady()
-  const components = router.currentRoute.value.matched.flatMap(it =>
-    Object.keys(it.components).map(c => it.components[c])
-  )
-  debugger
-  console.log(components)
 
   const ctx = {} as SSRContext
+  await ssrFetch()
   const html = await renderToString(app, ctx)
-
+  console.log('ctx', ctx)
   const links = renderPreloadLinks(ctx.modules, manifest)
   return [html, links]
 }

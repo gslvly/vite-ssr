@@ -30,6 +30,7 @@ server.use('*', async (req, res) => {
   console.log('t2', template)
 
   const render = (await viteServer.ssrLoadModule('./src/entry-server.ts')).render
+
   const [appHtml] = await render(url, {})
   const html = template.replace('<!--app-html-->', appHtml)
   res.set({ 'Content-Type': 'text/html' }).end(html)

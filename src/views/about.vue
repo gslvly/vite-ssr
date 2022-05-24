@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
+import { ref, defineAsyncComponent } from 'vue'
+import { asyncFetch } from '@/ssr-fetch'
+const HH = defineAsyncComponent(() => import('./hh.vue'))
 defineProps<{ msg: string }>()
 const count = ref(0)
 const a = () => {
@@ -8,16 +9,15 @@ const a = () => {
     setTimeout(() => {
       count.value += 100
       res(count.value)
-    }, 3000)
+    }, 300)
   })
 }
-defineExpose({
-  a,
-})
-await a()
+
+asyncFetch(a)
 </script>
 
 <template>
+  <HH></HH>
   <h1>{{ count }}</h1>
   about
 </template>
