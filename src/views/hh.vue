@@ -14,5 +14,5 @@ const getData = () => {
     })
   }).then(res => (msg.value = res))
 }
-asyncFetch(getData)
+await getData()
 </script>

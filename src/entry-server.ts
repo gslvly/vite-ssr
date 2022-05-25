@@ -7,13 +7,12 @@ type Manifest = {
 }
 const render = async (url: string, manifest: Manifest) => {
   const { app, router } = createApp()
+  console.log(url)
   router.push(url)
   await router.isReady()
 
   const ctx = {} as SSRContext
-  await ssrFetch()
   const html = await renderToString(app, ctx)
-  console.log('ctx', ctx)
   const links = renderPreloadLinks(ctx.modules, manifest)
   return [html, links]
 }

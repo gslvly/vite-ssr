@@ -25,14 +25,14 @@ server.use('*', async (req, res) => {
   const url = req.originalUrl
   // always read fresh template in dev
   let template = fs.readFileSync(resolve('index.html'), 'utf-8')
-  console.log(template)
   template = await viteServer.transformIndexHtml(url, template)
-  console.log('t2', template)
 
   const render = (await viteServer.ssrLoadModule('./src/entry-server.ts')).render
 
-  const [appHtml] = await render(url, {})
-  const html = template.replace('<!--app-html-->', appHtml)
+  const [appHtml, links] = await render(url, {})
+  const html = template.replace('<!--app-html-->', appHtml).replace('<!--preload-links-->', links)
+  console.log('appHtml', appHtml)
+  console.log('links', links)
   res.set({ 'Content-Type': 'text/html' }).end(html)
 })
 

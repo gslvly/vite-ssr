@@ -13,7 +13,7 @@ const a = () => {
   })
 }
 
-asyncFetch(a)
+await a()
 </script>
 
 <template>
@@ -22,7 +22,7 @@ asyncFetch(a)
   about
 </template>
 
-<style scoped>
+<style >
 a {
   color: #42b983;
 }
