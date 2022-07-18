@@ -4,17 +4,13 @@ import { basename } from 'path'
 type Manifest = {
   [p: string]: string[]
 }
-const render = async (url: string, manifest: Manifest) => {
+const render = async (url: string, manifest: Manifest,ctx:SSRContext) => {
   const { app, router } = createApp()
   router.push(url)
   await router.isReady()
   const components = router.currentRoute.value.matched.flatMap(it =>
     Object.keys(it.components).map(c => it.components[c])
   )
-  debugger
-  console.log(components)
-
-  const ctx = {} as SSRContext
   const html = await renderToString(app, ctx)
 
   const links = renderPreloadLinks(ctx.modules, manifest)

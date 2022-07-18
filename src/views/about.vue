@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref ,useSSRContext} from 'vue'
 
 defineProps<{ msg: string }>()
 const count = ref(0)
@@ -15,6 +15,11 @@ defineExpose({
   a,
 })
 await a()
+if(import.meta.env.SSR) {
+  const ctx  = useSSRContext()
+  console.log('ctx',ctx)
+  ctx!.title = 'title'
+}
 </script>
 
 <template>
