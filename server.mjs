@@ -26,18 +26,18 @@ server.use('*', async (req, res) => {
 
 
   const render = (await viteServer.ssrLoadModule('./src/entry-server.ts')).render
-  const ctx= {}
-  const [appHtml] = await render(url, {},ctx)
+  const ctx = {}
+  const [appHtml] = await render(url, {}, ctx)
   console.log(ctx)
 
   let template = fs.readFileSync(resolve('index.html'), 'utf-8')
-  console.log(template)
+  // console.log(template)
   template = await viteServer.transformIndexHtml(url, template)
 
-  template= template.replace(/(?<=<title>).*(?=<\/title>)/,ctx.title)
+  template = template.replace(/(?<=<title>).*(?=<\/title>)/, ctx.title)
   const html = template.replace('<!--app-html-->', appHtml)
-  pipeToNodeWritable(server, ctx, res)
-  // res.set({ 'Content-Type': 'text/html' }).end(html)
+  // pipeToNodeWritable(server, ctx, res)
+  res.set({ 'Content-Type': 'text/html' }).end(html)
 })
 
 server.listen(9000)
